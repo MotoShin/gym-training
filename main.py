@@ -45,5 +45,4 @@ ax1.annotate("pillow", xy=(30, 5))
 ax2.imshow(img_gray_array_pytorch, cmap='gray')
 ax2.annotate("torchvision", xy=(30, 5))
 
-# plt.imshow(img_gray_array, cmap='gray')
 plt.show()
