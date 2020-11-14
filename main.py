@@ -18,9 +18,7 @@ def pillow_grayscale(screen):
     img_rgbL = img_rgb.point(gamma22LUT)
     img_grayL = img_rgbL.convert("L")  # RGB to L(grayscale)
     img_gray = img_grayL.point(gamma045LUT)
-    return np.asarray(img_gray)
-
-def 
+    return np.asarray(img_gray) 
 
 env = gym.make('CartPole-v1').unwrapped
 env.reset()
