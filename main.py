@@ -20,15 +20,30 @@ def pillow_grayscale(screen):
     img_gray = img_grayL.point(gamma045LUT)
     return np.asarray(img_gray) 
 
+def pytorch_grayscale(screen):
+    resize_and_grayscale = T.Compose([T.ToPILImage(),
+                                T.Resize((84, 84), interpolation=Image.BICUBIC),
+                                T.Grayscale(num_output_channels=1),
+                                T.ToTensor()])
+
+    return resize_and_grayscale(screen).numpy()[0]
+
 env = gym.make('CartPole-v1').unwrapped
 env.reset()
 screen = env.render(mode='rgb_array')
 
-img_gray_array = pillow_grayscale(screen)
+img_gray_array_pillow = pillow_grayscale(screen)
+img_gray_array_pytorch = pytorch_grayscale(screen)
 
-img_gray = Image.fromarray(img_gray_array)
-plt.imshow(img_gray, cmap="Greys_r")
+fig = plt.figure()
+ax1 = fig.add_subplot(1, 2, 1)
+ax2 = fig.add_subplot(1, 2, 2)
+
+ax1.imshow(img_gray_array_pillow, cmap='gray')
+ax1.annotate("pillow", xy=(30, 5))
+
+ax2.imshow(img_gray_array_pytorch, cmap='gray')
+ax2.annotate("torchvision", xy=(30, 5))
+
+# plt.imshow(img_gray_array, cmap='gray')
 plt.show()
-
-img_gray_array = np.asarray(img_gray)
-print(img_gray_array)
